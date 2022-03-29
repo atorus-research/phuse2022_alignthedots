@@ -1,0 +1,54 @@
+---
+   title: "Aligning the Dots"
+author: "Mike Stackhouse and Maya Gans"
+date: "`r Sys.Date()`"
+output:
+   xaringan::moon_reader:
+   seal: false
+lib_dir: libs
+css: css/styles.css
+nature:
+   titleSlideClass: ["bottom", "left"]
+slideNumberFormat: "%current%"
+highlightStyle: github
+highlightLines: true
+ratio: "16:9"
+countIncrementalSlides: false
+---
+   
+   ```{css, echo=FALSE}
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono&family=Dela+Gothic+One&display=swap');
+
+
+body {
+   font-family: 'Space Mono';
+}
+
+h1,h2,h3,h4 {
+   font-family: 'Dela Gothic One';
+   text-transform: uppercase;
+}
+```
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(highlight = TRUE)
+```
+
+background-color: #ff03d7
+   
+   .title[
+      .title-prefix[ 
+         # Aligning the dots
+      ]
+      .title-suffix[
+         #Simplifying Table Presentations in R 
+      ]
+   ]
+
+.byline[
+   .location[Phuse us 2022 Atlanta, Georgia]
+   .authors[Mike Stackhouse Maya Gans]
+]
+
+

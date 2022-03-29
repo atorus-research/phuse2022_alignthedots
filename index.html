@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Aligning the Dots</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Mike Stackhouse and Maya Gans" />
+    <meta name="date" content="2022-03-29" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link rel="stylesheet" href="css/styles.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+
+
+background-color: #ff03d7
+
+.title[
+ .title-prefix[ 
+  # Aligning the dots
+ ]
+.title-suffix[ 
+  # Simplifying Table Presentations in R 
+ ]
+]
+
+.byline[
+  .location[Phuse us 2022 Atlanta, Georgia]
+  .authors[Mike Stackhouse Maya Gans]
+]
+
+---
+
+background-color: #cfff00
+
+# Overview
+
+.two-column[
+
+.left-col[
+![connect the dots flower](www/img/connect-the-dots.gif)
+]
+
+.right-col[
+- Defining the problem
+- How Tplyr solves it
+- Using f_str() outside of Tplyr
+- Portability
+- Examples
+]
+
+]
+
+---
+
+background-color: #fffb00
+
+.two-column[
+.left-col.top-margin-100[
+![](www/img/stephenfew.png)
+]
+
+.right-col[
+.pink.top-margin-200.big-h2[ 
+## Table Design 
+]
+"Align both the decimal point and the final digit to the right."
+]
+]
+
+.bottom-legend[DEFINING THE PROBLEM]
+
+---
+
+background-image: url('www/img/alignment_is_hard1.jpg')
+background-size: contain
+
+.problem-title[
+# alignment is harder than the math itself!
+]
+
+.right-legend.green[DEFINING THE PROBLEM]
+
+---
+
+background-image: url('www/img/alignment_is_hard2.jpg')
+background-size: contain
+
+.problem-title[
+#alignment is harder than the math itself!
+]
+
+.right-legend[DEFINING THE PROBLEM]
+
+---
+
+background-color: black
+
+.big-list[
+- .yellow[automate precision]
+- .pink[multiple tables]
+- .green[varying options]
+- .yellow[fringe cases]
+- .pink[align on other characters]
+]
+
+.right-legend.green[DEFINING THE PROBLEM]
+
+---
+
+# How Tplyr Solves It
+
+---
+
+# f_str() Outside of Tplyr
+
+---
+
+background-color: black
+
+.big-list[
+- .yellow[let the presentation library do the work]
+- .pink[monospace fonts make this possible and accssible]
+- .green[output agnostic]
+]
+
+.right-legend.green[PORTABILITY]
+
+---
+
+background-color: var(--yellow)
+
+.legend-top[EXAMPLES]
+
+.top-title[
+# RTF
+]
+
+---
+
+background-color: var(--green)
+
+.legend-top[EXAMPLES]
+
+.top-title.pink[
+# HTML
+]
+
+---
+
+background-color: var(--pink)
+
+
+.finale[ 
+# Thank You
+]
+
+.questions.green[QUESTIONS?]
+
+.fin-authors.yellow[
+mike.stackhouse@atorusresearch.com
+maya.gans@atorusresearch.com
+]
+
+
+
+&lt;style type="text/css"&gt;
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono&amp;family=Dela+Gothic+One&amp;display=swap');
+
+:root {
+  --pink: #ff03d7;
+  --green: #cfff00;
+  --yellow: #fffb00;
+}
+
+
+body {
+   font-family: 'Space Mono';
+}
+
+h1,h2,h3,h4 {
+   font-family: 'Dela Gothic One';
+   text-transform: uppercase;
+}
+
+.title {
+    position: absolute;
+    left: 40px;
+    width: 400px;
+    top: 100px;
+}
+
+.title h1 {
+    margin: 0;
+}
+
+.title-prefix {
+    color: var(--green);
+}
+
+.title-suffix {
+  color: black;
+}
+
+.byline {
+    position: absolute;
+    right: 50px;
+    width: 200px;
+    text-align: right;
+    top: 250px;
+}
+
+.authors {
+    color: var(--yellow);
+    font-weight: 800;
+}
+
+ul {
+  list-style: none;
+}
+
+ul li:before {
+    content: "";
+    background: var(--pink);
+    font-weight: bold;
+    font-size: 20px;
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    margin-left: -1em;
+    margin-right: 20px;
+}
+
+li {
+  margin-bottom: 60px;
+}
+
+.two-column {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.left-col {
+  width: 300px;
+  padding-top: 10px;
+  padding-right: 40px;
+}
+
+.left-col img {
+  display: block;
+  width: 100%;
+}
+
+.right-col {
+  width: 500px;
+}
+
+.pink {
+  color: var(--pink);
+}
+
+.top-margin-200 {
+  margin-top: 200px;
+}
+
+.top-margin-100 {
+  margin-top: 100px;
+}
+
+.bottom-legend {
+    position: absolute;
+    bottom: 50px;
+    left: 0px;
+    width: 100%;
+    text-align: center;
+    text-decoration: underline;
+    font-weight: 900;
+}
+
+.right-legend {
+    position: absolute;
+    right: 50px;
+    height: 90%;
+    text-align: center;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    text-decoration: underline;
+    font-weight: 900;
+}
+
+.green {
+  color: var(--green);
+}
+
+.yellow {
+  color: var(--yellow);
+}
+
+.problem-title h1 {
+    color: var(--pink);
+    margin: 0;
+    position: absolute;
+    font-size: 30px !important;
+    left: 60px;
+    top: 50px;
+    width: 400px;
+}
+
+.big-list li:before {
+    display: none;
+}
+
+.big-list {
+    position: absolute;
+    left: 20px;
+    top: 0px;
+    text-transform: uppercase;
+    font-size: 50px;
+    font-family: 'Dela Gothic One';
+}
+
+.big-list li {
+    margin-bottom: 30px;
+    max-width: 800px;
+}
+
+.finale h1 {
+    font-size: 120px;
+    text-align: center;
+    margin-bottom: 0;
+}
+
+.questions {
+    text-align: center;
+    display: block;
+    font-weight: 900;
+    text-decoration: underline;
+    margin-top: -30px;
+}
+
+.fin-authors.yellow {
+    display: block;
+    text-align: center;
+    margin: auto;
+    width: 600px;
+    margin-top: 250px;
+}
+
+.legend-top {
+    position: absolute;
+    text-align: center;
+    display: block;
+    width: 86%;
+    text-decoration: underline;
+    font-weight: 900;
+    top: 30px;
+}
+
+.top-title h1 {
+    text-align: center;
+    font-size: 100px;
+}
+&lt;/style&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"slideNumberFormat": "%current%",
+"highlightStyle": "github",
+"highlightLines": true,
+"ratio": "16:9",
+"countIncrementalSlides": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

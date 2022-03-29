@@ -1,0 +1,10 @@
+@font-face {
+  font-family: 'Geomanist';
+  src:  url('Geomanist-Regular.otf') format('otf');
+}
+
+h1,h2,h3,h4 {
+   font-family: Geomanist;
+   text-transform: uppercase !important;
+   color: red !important;
+}
