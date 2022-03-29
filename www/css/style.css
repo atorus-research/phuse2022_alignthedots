@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono&display=swap');
+
+/*
+@font-face {
+  font-family: 'Geomanist';
+  src:  url('Geomanist-Regular.otf') format('otf');
+}
+*/
+
+body {
+   font-family: 'Space Mono';
+}
+
+h1,h2,h3,h4 {
+   font-family: Geomanist;
+   text-transform: uppercase !important;
+   color: red !important;
+}
