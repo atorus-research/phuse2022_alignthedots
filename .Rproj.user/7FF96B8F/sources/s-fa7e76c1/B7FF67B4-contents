@@ -2,8 +2,8 @@
 
 Phuse US 2022 Presentation Outline:
 
-- Defining the problem
-- How Tplyr solves it
-- Using f_str() outside of Tplyr
-- Portability
-- Examples
+- [X] Maya: Defining the problem
+- [ ] Mike: How Tplyr solves it
+- [ ] Mike: Using f_str() outside of Tplyr
+- [X] Maya: Portability
+- [ ] Maya: Examples
