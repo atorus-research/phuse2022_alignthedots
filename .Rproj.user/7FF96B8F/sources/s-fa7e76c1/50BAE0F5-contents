@@ -6,7 +6,7 @@ output:
   xaringan::moon_reader:
     seal: false
     lib_dir: libs
-    css: [css/styles.css]
+    css: www/css/styles.css
     nature:
       titleSlideClass: ["bottom", "left"]
       slideNumberFormat: "%current%"
@@ -19,7 +19,6 @@ output:
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(highlight = TRUE)
-library(htmltools)
 ```
 
 ```{r xaringan-themer, include=FALSE}
@@ -46,8 +45,12 @@ background-color: #ff03d7
 ]
 
 .byline[
-  .location[Phuse us 2022 Atlanta, Georgia]
-  .authors[Mike Stackhouse Maya Gans]
+  .location[
+    Phuse US 2022 Atlanta, Georgia
+  ]
+  .authors[
+    Mike Stackhouse Maya Gans
+  ]
 ]
 
 ---
@@ -78,7 +81,7 @@ background-color: #fffb00
 
 .two-column[
 .left-col.top-margin-100[
-![](www/img/stephenfew.png)
+![Show Me The Numbers by Stephen Few](www/img/stephenfew.png)
 ]
 
 .right-col[
@@ -182,8 +185,6 @@ background-color: var(--pink)
 mike.stackhouse@atorusresearch.com
 maya.gans@atorusresearch.com
 ]
-
-
 
 ```{css, echo=FALSE}
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono&family=Dela+Gothic+One&display=swap');
@@ -385,3 +386,5 @@ li {
     font-size: 100px;
 }
 ```
+
+
