@@ -6,7 +6,7 @@ output:
   xaringan::moon_reader:
     seal: false
     lib_dir: libs
-    css: [css/styles.css]
+    css: www/css/style.css
     nature:
       titleSlideClass: ["bottom", "left"]
       slideNumberFormat: "%current%"
@@ -19,7 +19,6 @@ output:
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(highlight = TRUE)
-library(htmltools)
 ```
 
 ```{r xaringan-themer, include=FALSE}
@@ -46,8 +45,12 @@ background-color: #ff03d7
 ]
 
 .byline[
-  .location[Phuse us 2022 Atlanta, Georgia]
-  .authors[Mike Stackhouse Maya Gans]
+  .location[
+    Phuse US 2022 Atlanta, Georgia
+  ]
+  .authors[
+    Mike Stackhouse Maya Gans
+  ]
 ]
 
 ---
@@ -78,7 +81,7 @@ background-color: #fffb00
 
 .two-column[
 .left-col.top-margin-100[
-![](www/img/stephenfew.png)
+![Show Me The Numbers by Stephen Few](www/img/stephenfew.png)
 ]
 
 .right-col[
@@ -157,6 +160,24 @@ background-color: var(--yellow)
 # RTF
 ]
 
+.rtf[
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(magrittr)
+kableExtra::kable(data.frame(
+  row_label1 = "Age categories",
+  row_label2 = c("65-80", "<65", ">80"),
+  Placebo = c("42 (48.8)", "14 (16.3)", "30 (34.9)"),
+  `Xanomeline High Dose`= c("55 (65.5)", "11 (13.1)", "18 (21.4)"),
+  `Xanomeline Low Dose`= c("47 (56.0)", "8 ( 9.5)", "29 (34.5)")
+)) %>%
+  kableExtra::column_spec(1, width = "210px") %>%
+  kableExtra::column_spec(2, width = "160px") %>%
+  kableExtra::column_spec(3, width = "160px") %>%
+  kableExtra::column_spec(4, width = "300px") %>%
+  kableExtra::column_spec(5, width = "150px")
+```
+]
+
 ---
 
 background-color: var(--green)
@@ -165,6 +186,25 @@ background-color: var(--green)
 
 .top-title.pink[
 # HTML
+]
+
+
+.html[
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(magrittr)
+kableExtra::kable(data.frame(
+  row_label1 = "Age categories",
+  row_label2 = c("65-80", "<65", ">80"),
+  Placebo = c("42 (48.8)", "14 (16.3)", "30 (34.9)"),
+  `Xanomeline High Dose`= c("55 (65.5)", "11 (13.1)", "18 (21.4)"),
+  `Xanomeline Low Dose`= c("47 (56.0)", "8 ( 9.5)", "29 (34.5)")
+)) %>%
+  kableExtra::column_spec(1, width = "210px") %>%
+  kableExtra::column_spec(2, width = "160px") %>%
+  kableExtra::column_spec(3, width = "160px") %>%
+  kableExtra::column_spec(4, width = "300px") %>%
+  kableExtra::column_spec(5, width = "150px")
+```
 ]
 
 ---
@@ -182,8 +222,6 @@ background-color: var(--pink)
 mike.stackhouse@atorusresearch.com
 maya.gans@atorusresearch.com
 ]
-
-
 
 ```{css, echo=FALSE}
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono&family=Dela+Gothic+One&display=swap');
@@ -385,3 +423,5 @@ li {
     font-size: 100px;
 }
 ```
+
+

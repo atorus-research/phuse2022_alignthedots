@@ -4,9 +4,11 @@
     <title>Aligning the Dots</title>
     <meta charset="utf-8" />
     <meta name="author" content="Mike Stackhouse and Maya Gans" />
-    <meta name="date" content="2022-03-29" />
+    <meta name="date" content="2022-04-13" />
     <script src="libs/header-attrs/header-attrs.js"></script>
-    <link rel="stylesheet" href="css/styles.css" type="text/css" />
+    <script src="libs/kePrint/kePrint.js"></script>
+    <link href="libs/lightable/lightable.css" rel="stylesheet" />
+    <link rel="stylesheet" href="www/css/style.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
@@ -28,8 +30,12 @@ background-color: #ff03d7
 ]
 
 .byline[
-  .location[Phuse us 2022 Atlanta, Georgia]
-  .authors[Mike Stackhouse Maya Gans]
+  .location[
+    Phuse US 2022 Atlanta, Georgia
+  ]
+  .authors[
+    Mike Stackhouse Maya Gans
+  ]
 ]
 
 ---
@@ -60,7 +66,7 @@ background-color: #fffb00
 
 .two-column[
 .left-col.top-margin-100[
-![](www/img/stephenfew.png)
+![Show Me The Numbers by Stephen Few](www/img/stephenfew.png)
 ]
 
 .right-col[
@@ -139,6 +145,43 @@ background-color: var(--yellow)
 # RTF
 ]
 
+.rtf[
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; row_label1 &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; row_label2 &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Placebo &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Xanomeline.High.Dose &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Xanomeline.Low.Dose &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;width: 210px; "&gt; Age categories &lt;/td&gt;
+   &lt;td style="text-align:left;width: 160px; "&gt; 65-80 &lt;/td&gt;
+   &lt;td style="text-align:left;width: 160px; "&gt; 42 (48.8) &lt;/td&gt;
+   &lt;td style="text-align:left;width: 300px; "&gt; 55 (65.5) &lt;/td&gt;
+   &lt;td style="text-align:left;width: 150px; "&gt; 47 (56.0) &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;width: 210px; "&gt; Age categories &lt;/td&gt;
+   &lt;td style="text-align:left;width: 160px; "&gt; &amp;lt;65 &lt;/td&gt;
+   &lt;td style="text-align:left;width: 160px; "&gt; 14 (16.3) &lt;/td&gt;
+   &lt;td style="text-align:left;width: 300px; "&gt; 11 (13.1) &lt;/td&gt;
+   &lt;td style="text-align:left;width: 150px; "&gt; 8 ( 9.5) &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;width: 210px; "&gt; Age categories &lt;/td&gt;
+   &lt;td style="text-align:left;width: 160px; "&gt; &amp;gt;80 &lt;/td&gt;
+   &lt;td style="text-align:left;width: 160px; "&gt; 30 (34.9) &lt;/td&gt;
+   &lt;td style="text-align:left;width: 300px; "&gt; 18 (21.4) &lt;/td&gt;
+   &lt;td style="text-align:left;width: 150px; "&gt; 29 (34.5) &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
 ---
 
 background-color: var(--green)
@@ -147,6 +190,44 @@ background-color: var(--green)
 
 .top-title.pink[
 # HTML
+]
+
+
+.html[
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; row_label1 &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; row_label2 &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Placebo &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Xanomeline.High.Dose &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Xanomeline.Low.Dose &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;width: 210px; "&gt; Age categories &lt;/td&gt;
+   &lt;td style="text-align:left;width: 160px; "&gt; 65-80 &lt;/td&gt;
+   &lt;td style="text-align:left;width: 160px; "&gt; 42 (48.8) &lt;/td&gt;
+   &lt;td style="text-align:left;width: 300px; "&gt; 55 (65.5) &lt;/td&gt;
+   &lt;td style="text-align:left;width: 150px; "&gt; 47 (56.0) &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;width: 210px; "&gt; Age categories &lt;/td&gt;
+   &lt;td style="text-align:left;width: 160px; "&gt; &amp;lt;65 &lt;/td&gt;
+   &lt;td style="text-align:left;width: 160px; "&gt; 14 (16.3) &lt;/td&gt;
+   &lt;td style="text-align:left;width: 300px; "&gt; 11 (13.1) &lt;/td&gt;
+   &lt;td style="text-align:left;width: 150px; "&gt; 8 ( 9.5) &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;width: 210px; "&gt; Age categories &lt;/td&gt;
+   &lt;td style="text-align:left;width: 160px; "&gt; &amp;gt;80 &lt;/td&gt;
+   &lt;td style="text-align:left;width: 160px; "&gt; 30 (34.9) &lt;/td&gt;
+   &lt;td style="text-align:left;width: 300px; "&gt; 18 (21.4) &lt;/td&gt;
+   &lt;td style="text-align:left;width: 150px; "&gt; 29 (34.5) &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
 ]
 
 ---
@@ -164,8 +245,6 @@ background-color: var(--pink)
 mike.stackhouse@atorusresearch.com
 maya.gans@atorusresearch.com
 ]
-
-
 
 &lt;style type="text/css"&gt;
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono&amp;family=Dela+Gothic+One&amp;display=swap');
@@ -367,6 +446,8 @@ li {
     font-size: 100px;
 }
 &lt;/style&gt;
+
+
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
