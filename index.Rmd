@@ -141,9 +141,37 @@ background-color: black
 
 # How Tplyr Solves It
 
+- What is the `f_str()` (pronounced "f string")
+  - An object to hold metadata around a string format
+  - You can get a lot of metadata out of a small bit of information
+- What does an `f_str()` look like
+  - Let's say you wanted to format the variables `hp` and `wt` from mtcars
+  - `f_str('xxx (x.xx)', hp, wt)`
+- What information can we get out of that? A lot!
+  - The variables being formatted are `hp` and `wt`
+  - `hp` is formatted with a width of 3 integers and no decimals
+  - `wt` is formatted with a width of 1 integer and 2 decimals
+  - What the output string should look like
+  - And more! 
+- Tplyr uses this information to do _a lot_
+  - In descriptive statistic layers, it tells us:
+    - What summaries will be performed
+    - Which summaries go on the same row
+  - In count layers, it tells us:
+    - Which numbers will be presented
+  - `f_str()` objects collected whether auto-precision should be used
+    - Decimal places can be incremented based on data as collected (or now - provided from an external source)
+
 ---
 
 # f_str() Outside of Tplyr
+
+- Tplyr leverages the `f_str()` object to do a lot of work, but you can use it too! 
+- With `f_str()` and the Tplyr function `num_fmt()`, you can write you own custom formatter
+  - `f_str()` provides the metadata, and `num_fmt()` with properly round and format 
+- The key idea of the formatter is understanding the input data structure to tie everything together
+  - <Reference example code in test.R>
+- Once set up, you have a consistent and highly flexible format customize formatting
 
 ---
 
