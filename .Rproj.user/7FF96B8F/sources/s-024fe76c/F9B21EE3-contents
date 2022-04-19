@@ -103,6 +103,13 @@ li {
   margin-top: 100px;
 }
 
+.top-legend {
+   display: block;
+   text-align: center;
+   text-decoration: underline;
+   font-weight: 900;
+}
+
 .bottom-legend {
     position: absolute;
     bottom: 50px;
@@ -214,4 +221,74 @@ li {
 
 .html thead {
     color: var(--yellow);
+}
+
+.big-text-2 {
+   color: var(--green);
+}
+
+.big-text-3 {
+    text-align: center;
+    width: 80%;
+    margin: auto;
+    margin-top: -20px;
+    color: var(--pink);
+}
+
+.big-text h1 {
+    font-size: 80px;
+    text-align: center;
+}
+
+.custom-hr {
+    display: block;
+    height: 5px;
+    margin: 30px auto 60px auto;
+    width: 500px;
+    background: var(--yellow);
+}
+
+span.little-text {
+    text-align: center;
+    display: block;
+}
+
+.lft {
+   position: absolute;
+   width: 20%;
+}
+
+.rht pre code {
+    font-size: 18px !important;
+}
+
+.hljs-github .hljs {
+    display: block;
+    overflow-x: auto;
+    padding: 30px;
+    border-radius: 15px;
+    color: #333;
+    background: var(--yellow);
+    width: max-content;
+    font-weight: 900;
+    /* font-size: 20px; */
+    margin-top: -20px;
+    margin-left: -200px;
+}
+
+.rht {
+    position: absolute;
+    right: 0;
+    width: 50%;
+    /* font-size: 5px; */
+}
+
+.big-spacing p {
+    margin-bottom: 50px;
+}
+
+.output {
+    color: var(--yellow);
+    font-weight: 900;
+    margin-left: -200px;
 }

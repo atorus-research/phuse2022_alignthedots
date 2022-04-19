@@ -4,7 +4,7 @@
     <title>Aligning the Dots</title>
     <meta charset="utf-8" />
     <meta name="author" content="Mike Stackhouse and Maya Gans" />
-    <meta name="date" content="2022-04-13" />
+    <meta name="date" content="2022-04-19" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <script src="libs/kePrint/kePrint.js"></script>
     <link href="libs/lightable/lightable.css" rel="stylesheet" />
@@ -81,7 +81,7 @@ background-color: #fffb00
 
 ---
 
-background-image: url('www/img/alignment_is_hard1.jpg')
+background-image: url(www/img/alignment_is_hard1.jpg)
 background-size: contain
 
 .problem-title[
@@ -117,11 +117,103 @@ background-color: black
 
 ---
 
-# How Tplyr Solves It
+background-color: #ff03d7
+
+.top-legend[HOW TPLYR SOLVES IT]
+.big-text.yellow[
+#What is the f_str()
+] 
+.custom-hr[]
+.little-text[Pronounced .yellow["f string"], it is an object to hold metadata around a string format. You can get a lot of metadata out of a small bit of information!]
+ 
 
 ---
 
+background-image: url(www/img/tplyr_fstr1.jpg)
+background-size: contain
+
+.top-legend.pink[HOW TPLYR SOLVES IT]
+
+.big-text-2[
+## What does an f_str() look like
+]
+
+
+  
+---
+
+background-image: url(www/img/tplyr_fstr2.jpg)
+background-size: contain
+
+.top-legend[HOW TPLYR SOLVES IT]
+
+.big-text-3[
+##Tplyr uses this information to do a lot
+]
+
+
+
+---
+
+background-image: url(www/img/tplyr_fstr3.jpg)
+background-size: contain
+
+.top-legend[HOW TPLYR SOLVES IT]
+
+.big-text-3[
+##Tplyr uses this information to do a lot
+]
+
+
+
+---
+
+background-color: #ff03d7
+
 # f_str() Outside of Tplyr
+
+.lft[
+.big-spacing[
+`f_str()` provides the metadata, and `num_fmt()` with properly round and format
+
+Once set up, you have a consistent and highly flexible format customize formatting
+]
+]
+
+.rht[
+
+```r
+apply_formats &lt;- function(dat, format=NULL) {
+  pmap_chr(dat,function(...) apply_fmts(...), fmt=format)
+}
+
+apply_fmts &lt;- function(...) {
+   list2env(list(...), env=environment())
+   repl &lt;- vector('list', length(fmt$settings))
+   for (i in seq_along(fmt$settings)) {
+      repl[[i]] &lt;- Tplyr:::num_fmt(eval(fmt$vars[[i]]), i, fmt=fmt)
+   }
+   args &lt;- append(list(fmt$repl_str), repl)
+   do.call('sprintf', args)
+}
+
+mtcars %&gt;% 
+   apply_formats(format=f_str("xxx (x.xx)", hp, wt))
+```
+
+
+
+.output[
+
+```
+## [1] "110 (2.62)" "110 (2.88)" " 93 (2.32)" "110 (3.21)" "175 (3.44)"
+## [6] "105 (3.46)"
+```
+]
+
+]
+
+
 
 ---
 

@@ -26,6 +26,9 @@ resource_files:
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(highlight = TRUE)
+library(magrittr)
+library(purrr)
+library(Tplyr)
 ```
 
 ```{r xaringan-themer, include=FALSE}
@@ -139,39 +142,141 @@ background-color: black
 
 ---
 
-# How Tplyr Solves It
+background-color: #ff03d7
 
-- What is the `f_str()` (pronounced "f string")
-  - An object to hold metadata around a string format
-  - You can get a lot of metadata out of a small bit of information
-- What does an `f_str()` look like
-  - Let's say you wanted to format the variables `hp` and `wt` from mtcars
-  - `f_str('xxx (x.xx)', hp, wt)`
-- What information can we get out of that? A lot!
-  - The variables being formatted are `hp` and `wt`
-  - `hp` is formatted with a width of 3 integers and no decimals
-  - `wt` is formatted with a width of 1 integer and 2 decimals
-  - What the output string should look like
-  - And more! 
-- Tplyr uses this information to do _a lot_
-  - In descriptive statistic layers, it tells us:
-    - What summaries will be performed
-    - Which summaries go on the same row
-  - In count layers, it tells us:
-    - Which numbers will be presented
-  - `f_str()` objects collected whether auto-precision should be used
-    - Decimal places can be incremented based on data as collected (or now - provided from an external source)
+.top-legend[HOW TPLYR SOLVES IT]
+.big-text.yellow[
+#What is the f_str()
+] 
+.custom-hr[]
+.little-text[Pronounced .yellow["f string"], it is an object to hold metadata around a string format. You can get a lot of metadata out of a small bit of information!]
+ 
 
 ---
 
+background-image: url(www/img/tplyr_fstr1.jpg)
+background-size: contain
+
+.top-legend.pink[HOW TPLYR SOLVES IT]
+
+.big-text-2[
+## What does an f_str() look like
+]
+
+```{r, echo=FALSE}
+# f_str('xxx (x.xx)', hp, wt)
+# The variables being formatted are `hp` and `wt`
+# `hp` is formatted with a width of 3 integers and no decimals
+# `wt` is formatted with a width of 1 integer and 2 decimals
+# What the output string should look like
+# And more! 
+```
+  
+---
+
+background-image: url(www/img/tplyr_fstr2.jpg)
+background-size: contain
+
+.top-legend[HOW TPLYR SOLVES IT]
+
+.big-text-3[
+##Tplyr uses this information to do a lot
+]
+
+```{r, echo=FALSE}
+# In descriptive statistic layers, it tells us:
+# What summaries will be performed
+# Which summaries go on the same row
+```
+
+---
+
+background-image: url(www/img/tplyr_fstr3.jpg)
+background-size: contain
+
+.top-legend[HOW TPLYR SOLVES IT]
+
+.big-text-3[
+##Tplyr uses this information to do a lot
+]
+
+```{r, echo=FALSE}
+# In count layers, it tells us:
+# Which numbers will be presented
+# `f_str()` objects collected whether auto-precision should be used
+# Decimal places can be incremented based on data as collected (or now - provided from an external source)
+```
+
+---
+
+background-color: #ff03d7
+
 # f_str() Outside of Tplyr
 
-- Tplyr leverages the `f_str()` object to do a lot of work, but you can use it too! 
-- With `f_str()` and the Tplyr function `num_fmt()`, you can write you own custom formatter
-  - `f_str()` provides the metadata, and `num_fmt()` with properly round and format 
-- The key idea of the formatter is understanding the input data structure to tie everything together
-  - <Reference example code in test.R>
-- Once set up, you have a consistent and highly flexible format customize formatting
+.lft[
+.big-spacing[
+`f_str()` provides the metadata, and `num_fmt()` with properly round and format
+
+Once set up, you have a consistent and highly flexible format customize formatting
+]
+]
+
+.rht[
+```{r, warning=FALSE, message=FALSE, eval=FALSE}
+apply_formats <- function(dat, format=NULL) {
+  pmap_chr(dat,function(...) apply_fmts(...), fmt=format)
+}
+
+apply_fmts <- function(...) {
+   list2env(list(...), env=environment())
+   repl <- vector('list', length(fmt$settings))
+   for (i in seq_along(fmt$settings)) {
+      repl[[i]] <- Tplyr:::num_fmt(eval(fmt$vars[[i]]), i, fmt=fmt)
+   }
+   args <- append(list(fmt$repl_str), repl)
+   do.call('sprintf', args)
+}
+
+mtcars %>% 
+   apply_formats(format=f_str("xxx (x.xx)", hp, wt))
+```
+
+```{r, echo=FALSE, results='hide'}
+apply_formats <- function(dat, format=NULL) {
+  pmap_chr(dat,function(...) apply_fmts(...), fmt=format)
+}
+
+apply_fmts <- function(...) {
+   list2env(list(...), env=environment())
+   repl <- vector('list', length(fmt$settings))
+   for (i in seq_along(fmt$settings)) {
+      repl[[i]] <- Tplyr:::num_fmt(eval(fmt$vars[[i]]), i, fmt=fmt)
+   }
+   args <- append(list(fmt$repl_str), repl)
+   do.call('sprintf', args)
+}
+
+mtcars %>% 
+   apply_formats(format=f_str("xxx (x.xx)", hp, wt))
+```
+
+.output[
+```{r, echo=FALSE}
+head(mtcars %>% 
+   apply_formats(format=f_str("xxx (x.xx)", hp, wt)))
+```
+]
+
+]
+
+```{r, echo=FALSE}
+# Tplyr leverages the `f_str()` object to do a lot of work, but you can use it too! 
+# With `f_str()` and the Tplyr function `num_fmt()`, you can write you own custom formatter
+# `f_str()` provides the metadata, and `num_fmt()` with properly round and format 
+# The key idea of the formatter is understanding the input data structure to tie everything together
+# <Reference example code in test.R>
+# Once set up, you have a consistent and highly flexible format customize formatting
+```
 
 ---
 
