@@ -227,7 +227,7 @@ background-size: contain
 
 background-color: black
 
-.yellow[
+.yellow.center[
 # f_str() Outside of Tplyr
 ]
 

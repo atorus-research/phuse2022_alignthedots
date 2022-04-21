@@ -280,6 +280,10 @@ span.little-text {
     left: 250px;
 }
 
+.center {
+   text-align:center;
+}
+
 .rht {
     color: var(--yellow);
     font-weight: 900;
