@@ -253,13 +253,8 @@ span.little-text {
     display: block;
 }
 
-.lft {
-   position: absolute;
-   width: 20%;
-}
-
-.rht pre code {
-    font-size: 18px !important;
+.lft pre code {
+    font-size: 16px !important;
 }
 
 .hljs-github .hljs {
@@ -276,19 +271,40 @@ span.little-text {
     margin-left: -200px;
 }
 
-.rht {
-    position: absolute;
-    right: 0;
-    width: 50%;
-    /* font-size: 5px; */
-}
-
 .big-spacing p {
     margin-bottom: 50px;
 }
 
-.output {
+.lft {
+    position: absolute;
+    left: 250px;
+}
+
+.rht {
     color: var(--yellow);
     font-weight: 900;
-    margin-left: -200px;
+    /* margin-left: -200px; */
+    position: absolute;
+    right: 40px;
+}
+
+.rht pre .remark-code {
+    font-size: 15px;
+}
+
+
+
+.sub-title-desc h3 {
+    padding: 0;
+    margin: 0;
+    font-size: 30px;
+    padding-top: 60px;
+}
+
+.sub-title-count h3 {
+    padding: 0;
+    margin: 0;
+    font-size: 30px;
+    padding-top: 50px;
+    padding-left: 25px;
 }

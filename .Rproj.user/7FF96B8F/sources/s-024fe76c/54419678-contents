@@ -21,6 +21,9 @@ resource_files:
 - www/img/alignment_is_hard2.jpg
 - www/img/connect-the-dots.gif
 - www/img/stephenfew.png
+- www/img/tplyr_fstr1.jpg
+- www/img/tplyr_fstr2.png
+- www/img/tplyr_fstr3.png
 ---
 
 ```{r setup, include=FALSE}
@@ -29,6 +32,7 @@ knitr::opts_chunk$set(highlight = TRUE)
 library(magrittr)
 library(purrr)
 library(Tplyr)
+library(dplyr)
 ```
 
 ```{r xaringan-themer, include=FALSE}
@@ -43,19 +47,19 @@ mono_light(
 )
 ```
 
-background-color: #ff03d7
+background-color: black
 
 .title[
  .title-prefix[ 
   # Aligning the dots
  ]
-.title-suffix[ 
+.title-suffix.pink[ 
   # Simplifying Table Presentations in R 
  ]
 ]
 
 .byline[
-  .location[
+  .location.pink[
     Phuse US 2022 Atlanta, Georgia
   ]
   .authors[
@@ -65,9 +69,11 @@ background-color: #ff03d7
 
 ---
 
-background-color: #cfff00
+background-color: black
 
+.green[
 # Overview
+]
 
 .two-column[
 
@@ -75,7 +81,7 @@ background-color: #cfff00
 ![connect the dots flower](www/img/connect-the-dots.gif)
 ]
 
-.right-col[
+.right-col.pink[
 - Defining the problem
 - How Tplyr solves it
 - Using f_str() outside of Tplyr
@@ -87,7 +93,7 @@ background-color: #cfff00
 
 ---
 
-background-color: #fffb00
+background-color: black
 
 .two-column[
 .left-col.top-margin-100[
@@ -98,11 +104,13 @@ background-color: #fffb00
 .pink.top-margin-200.big-h2[ 
 ## Table Design 
 ]
+.pink[
 "Align both the decimal point and the final digit to the right."
 ]
 ]
+]
 
-.bottom-legend[DEFINING THE PROBLEM]
+.bottom-legend.yellow[DEFINING THE PROBLEM]
 
 ---
 
@@ -124,7 +132,7 @@ background-size: contain
 #alignment is harder than the math itself!
 ]
 
-.right-legend[DEFINING THE PROBLEM]
+.right-legend.green[DEFINING THE PROBLEM]
 
 ---
 
@@ -142,14 +150,14 @@ background-color: black
 
 ---
 
-background-color: #ff03d7
+background-color: black
 
-.top-legend[HOW TPLYR SOLVES IT]
+.top-legend.pink[HOW TPLYR SOLVES IT]
 .big-text.yellow[
 #What is the f_str()
 ] 
 .custom-hr[]
-.little-text[Pronounced .yellow["f string"], it is an object to hold metadata around a string format. You can get a lot of metadata out of a small bit of information!]
+.little-text.pink[Pronounced .yellow["f string"], it is an object to hold metadata around a string format. You can get a lot of metadata out of a small bit of information!]
  
 
 ---
@@ -174,13 +182,17 @@ background-size: contain
   
 ---
 
-background-image: url(www/img/tplyr_fstr2.jpg)
+background-image: url(www/img/tplyr_fstr2.png)
 background-size: contain
 
-.top-legend[HOW TPLYR SOLVES IT]
+.top-legend.green[HOW TPLYR SOLVES IT]
 
 .big-text-3[
 ##Tplyr uses this information to do a lot
+]
+
+.sub-title-desc.pink[
+### DESCRIPTIVE LAYER
 ]
 
 ```{r, echo=FALSE}
@@ -191,13 +203,17 @@ background-size: contain
 
 ---
 
-background-image: url(www/img/tplyr_fstr3.jpg)
+background-image: url(www/img/tplyr_fstr3.png)
 background-size: contain
 
-.top-legend[HOW TPLYR SOLVES IT]
+.top-legend.green[HOW TPLYR SOLVES IT]
 
 .big-text-3[
 ##Tplyr uses this information to do a lot
+]
+
+.sub-title-count.pink[
+### COUNT LAYER
 ]
 
 ```{r, echo=FALSE}
@@ -209,64 +225,63 @@ background-size: contain
 
 ---
 
-background-color: #ff03d7
+background-color: black
 
+.yellow[
 # f_str() Outside of Tplyr
+]
 
 .lft[
-.big-spacing[
-`f_str()` provides the metadata, and `num_fmt()` with properly round and format
-
-Once set up, you have a consistent and highly flexible format customize formatting
-]
-]
-
-.rht[
 ```{r, warning=FALSE, message=FALSE, eval=FALSE}
-apply_formats <- function(dat, format=NULL) {
-  pmap_chr(dat,function(...) apply_fmts(...), fmt=format)
+apply_formats <- function(format_string, ..., empty = c(.overall = "")) {
+   format <- f_str(format_string, ..., empty=empty)
+   pmap_chr(list(...), function(...) apply_fmts(...), fmt=format)
 }
 
-apply_fmts <- function(...) {
-   list2env(list(...), env=environment())
+apply_fmts <- function(..., fmt) {
+   nums <- list(...)
    repl <- vector('list', length(fmt$settings))
    for (i in seq_along(fmt$settings)) {
-      repl[[i]] <- Tplyr:::num_fmt(eval(fmt$vars[[i]]), i, fmt=fmt)
+      repl[[i]] <- Tplyr:::num_fmt(nums[[i]], i, fmt=fmt)
    }
    args <- append(list(fmt$repl_str), repl)
    do.call('sprintf', args)
 }
 
-mtcars %>% 
-   apply_formats(format=f_str("xxx (x.xx)", hp, wt))
+mtcars %>%
+   mutate(
+      formatted_string = apply_formats("xxx (x.xx)", hp, wt)
+   )
 ```
 
 ```{r, echo=FALSE, results='hide'}
-apply_formats <- function(dat, format=NULL) {
-  pmap_chr(dat,function(...) apply_fmts(...), fmt=format)
+apply_formats <- function(format_string, ..., empty = c(.overall = "")) {
+   format <- f_str(format_string, ..., empty=empty)
+   pmap_chr(list(...), function(...) apply_fmts(...), fmt=format)
 }
 
-apply_fmts <- function(...) {
-   list2env(list(...), env=environment())
+apply_fmts <- function(..., fmt) {
+   nums <- list(...)
    repl <- vector('list', length(fmt$settings))
    for (i in seq_along(fmt$settings)) {
-      repl[[i]] <- Tplyr:::num_fmt(eval(fmt$vars[[i]]), i, fmt=fmt)
+      repl[[i]] <- Tplyr:::num_fmt(nums[[i]], i, fmt=fmt)
    }
    args <- append(list(fmt$repl_str), repl)
    do.call('sprintf', args)
 }
-
-mtcars %>% 
-   apply_formats(format=f_str("xxx (x.xx)", hp, wt))
-```
-
-.output[
-```{r, echo=FALSE}
-head(mtcars %>% 
-   apply_formats(format=f_str("xxx (x.xx)", hp, wt)))
 ```
 ]
 
+.rht[
+
+```{r, echo=FALSE}
+mtcars %>%
+   mutate(
+      formatted_string = apply_formats("xxx (x.xx)", hp, wt)
+   ) %>% 
+   dplyr::select(hp, wt, formatted_string) %>%
+   head(., 20)
+```
 ]
 
 ```{r, echo=FALSE}
@@ -292,11 +307,11 @@ background-color: black
 
 ---
 
-background-color: var(--yellow)
+background-color: black
 
-.legend-top[EXAMPLES]
+.legend-top.pink[EXAMPLES]
 
-.top-title[
+.top-title.yellow[
 # RTF
 ]
 
@@ -320,11 +335,11 @@ kableExtra::kable(data.frame(
 
 ---
 
-background-color: var(--green)
+background-color: black
 
-.legend-top[EXAMPLES]
+.legend-top.pink[EXAMPLES]
 
-.top-title.pink[
+.top-title.green[
 # HTML
 ]
 
@@ -349,10 +364,10 @@ kableExtra::kable(data.frame(
 
 ---
 
-background-color: var(--pink)
+background-color: black
 
 
-.finale[ 
+.finale.pink[ 
 # Thank You
 ]
 

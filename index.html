@@ -4,7 +4,7 @@
     <title>Aligning the Dots</title>
     <meta charset="utf-8" />
     <meta name="author" content="Mike Stackhouse and Maya Gans" />
-    <meta name="date" content="2022-04-19" />
+    <meta name="date" content="2022-04-21" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <script src="libs/kePrint/kePrint.js"></script>
     <link href="libs/lightable/lightable.css" rel="stylesheet" />
@@ -18,19 +18,19 @@
 
 
 
-background-color: #ff03d7
+background-color: black
 
 .title[
  .title-prefix[ 
   # Aligning the dots
  ]
-.title-suffix[ 
+.title-suffix.pink[ 
   # Simplifying Table Presentations in R 
  ]
 ]
 
 .byline[
-  .location[
+  .location.pink[
     Phuse US 2022 Atlanta, Georgia
   ]
   .authors[
@@ -40,9 +40,11 @@ background-color: #ff03d7
 
 ---
 
-background-color: #cfff00
+background-color: black
 
+.green[
 # Overview
+]
 
 .two-column[
 
@@ -50,7 +52,7 @@ background-color: #cfff00
 ![connect the dots flower](www/img/connect-the-dots.gif)
 ]
 
-.right-col[
+.right-col.pink[
 - Defining the problem
 - How Tplyr solves it
 - Using f_str() outside of Tplyr
@@ -62,7 +64,7 @@ background-color: #cfff00
 
 ---
 
-background-color: #fffb00
+background-color: black
 
 .two-column[
 .left-col.top-margin-100[
@@ -73,11 +75,13 @@ background-color: #fffb00
 .pink.top-margin-200.big-h2[ 
 ## Table Design 
 ]
+.pink[
 "Align both the decimal point and the final digit to the right."
 ]
 ]
+]
 
-.bottom-legend[DEFINING THE PROBLEM]
+.bottom-legend.yellow[DEFINING THE PROBLEM]
 
 ---
 
@@ -99,7 +103,7 @@ background-size: contain
 #alignment is harder than the math itself!
 ]
 
-.right-legend[DEFINING THE PROBLEM]
+.right-legend.green[DEFINING THE PROBLEM]
 
 ---
 
@@ -117,14 +121,14 @@ background-color: black
 
 ---
 
-background-color: #ff03d7
+background-color: black
 
-.top-legend[HOW TPLYR SOLVES IT]
+.top-legend.pink[HOW TPLYR SOLVES IT]
 .big-text.yellow[
 #What is the f_str()
 ] 
 .custom-hr[]
-.little-text[Pronounced .yellow["f string"], it is an object to hold metadata around a string format. You can get a lot of metadata out of a small bit of information!]
+.little-text.pink[Pronounced .yellow["f string"], it is an object to hold metadata around a string format. You can get a lot of metadata out of a small bit of information!]
  
 
 ---
@@ -142,75 +146,99 @@ background-size: contain
   
 ---
 
-background-image: url(www/img/tplyr_fstr2.jpg)
+background-image: url(www/img/tplyr_fstr2.png)
 background-size: contain
 
-.top-legend[HOW TPLYR SOLVES IT]
+.top-legend.green[HOW TPLYR SOLVES IT]
 
 .big-text-3[
 ##Tplyr uses this information to do a lot
+]
+
+.sub-title-desc.pink[
+### DESCRIPTIVE LAYER
 ]
 
 
 
 ---
 
-background-image: url(www/img/tplyr_fstr3.jpg)
+background-image: url(www/img/tplyr_fstr3.png)
 background-size: contain
 
-.top-legend[HOW TPLYR SOLVES IT]
+.top-legend.green[HOW TPLYR SOLVES IT]
 
 .big-text-3[
 ##Tplyr uses this information to do a lot
+]
+
+.sub-title-count.pink[
+### COUNT LAYER
 ]
 
 
 
 ---
 
-background-color: #ff03d7
+background-color: black
 
+.yellow[
 # f_str() Outside of Tplyr
+]
 
 .lft[
-.big-spacing[
-`f_str()` provides the metadata, and `num_fmt()` with properly round and format
-
-Once set up, you have a consistent and highly flexible format customize formatting
-]
-]
-
-.rht[
 
 ```r
-apply_formats &lt;- function(dat, format=NULL) {
-  pmap_chr(dat,function(...) apply_fmts(...), fmt=format)
+apply_formats &lt;- function(format_string, ..., empty = c(.overall = "")) {
+   format &lt;- f_str(format_string, ..., empty=empty)
+   pmap_chr(list(...), function(...) apply_fmts(...), fmt=format)
 }
 
-apply_fmts &lt;- function(...) {
-   list2env(list(...), env=environment())
+apply_fmts &lt;- function(..., fmt) {
+   nums &lt;- list(...)
    repl &lt;- vector('list', length(fmt$settings))
    for (i in seq_along(fmt$settings)) {
-      repl[[i]] &lt;- Tplyr:::num_fmt(eval(fmt$vars[[i]]), i, fmt=fmt)
+      repl[[i]] &lt;- Tplyr:::num_fmt(nums[[i]], i, fmt=fmt)
    }
    args &lt;- append(list(fmt$repl_str), repl)
    do.call('sprintf', args)
 }
 
-mtcars %&gt;% 
-   apply_formats(format=f_str("xxx (x.xx)", hp, wt))
+mtcars %&gt;%
+   mutate(
+      formatted_string = apply_formats("xxx (x.xx)", hp, wt)
+   )
 ```
 
 
-
-.output[
-
-```
-## [1] "110 (2.62)" "110 (2.88)" " 93 (2.32)" "110 (3.21)" "175 (3.44)"
-## [6] "105 (3.46)"
-```
 ]
 
+.rht[
+
+
+```
+##                      hp    wt formatted_string
+## Mazda RX4           110 2.620       110 (2.62)
+## Mazda RX4 Wag       110 2.875       110 (2.88)
+## Datsun 710           93 2.320        93 (2.32)
+## Hornet 4 Drive      110 3.215       110 (3.21)
+## Hornet Sportabout   175 3.440       175 (3.44)
+## Valiant             105 3.460       105 (3.46)
+## Duster 360          245 3.570       245 (3.57)
+## Merc 240D            62 3.190        62 (3.19)
+## Merc 230             95 3.150        95 (3.15)
+## Merc 280            123 3.440       123 (3.44)
+## Merc 280C           123 3.440       123 (3.44)
+## Merc 450SE          180 4.070       180 (4.07)
+## Merc 450SL          180 3.730       180 (3.73)
+## Merc 450SLC         180 3.780       180 (3.78)
+## Cadillac Fleetwood  205 5.250       205 (5.25)
+## Lincoln Continental 215 5.424       215 (5.42)
+## Chrysler Imperial   230 5.345       230 (5.34)
+## Fiat 128             66 2.200        66 (2.20)
+## Honda Civic          52 1.615        52 (1.61)
+## Toyota Corolla       65 1.835        65 (1.83)
+```
 ]
 
 
@@ -229,11 +257,11 @@ background-color: black
 
 ---
 
-background-color: var(--yellow)
+background-color: black
 
-.legend-top[EXAMPLES]
+.legend-top.pink[EXAMPLES]
 
-.top-title[
+.top-title.yellow[
 # RTF
 ]
 
@@ -276,11 +304,11 @@ background-color: var(--yellow)
 
 ---
 
-background-color: var(--green)
+background-color: black
 
-.legend-top[EXAMPLES]
+.legend-top.pink[EXAMPLES]
 
-.top-title.pink[
+.top-title.green[
 # HTML
 ]
 
@@ -324,10 +352,10 @@ background-color: var(--green)
 
 ---
 
-background-color: var(--pink)
+background-color: black
 
 
-.finale[ 
+.finale.pink[ 
 # Thank You
 ]
 
