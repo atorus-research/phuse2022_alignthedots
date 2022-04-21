@@ -8,18 +8,25 @@ library(purrr)
 #' This is the outer function that would take the data, take the format, and
 #' apply the formats as specified
 #'
-#' @param dat Input data frame
-#' @param format An f_str object from Tplyr
 #'
-#' @return Character vector of formatted values the length of dat
+#' @param format_string A string representing the desired format of the output character vector
+#' @param ... Variable from the dataframe to be formatted
+#' @param empty If NA values are present, text to fill the space
+#'
+#' @return Character vector of formatted values the length of the input vectors
 #'
 #' @examples
 #' 
 #' mtcars %>% 
-#'   apply_formats(format=f_str("xx (x.xx)", hp, wt))
-apply_formats <- function(dat, format=NULL) {
+#'   mutate(
+#'      formatted_string = apply_formats("xxx (x.xx)", hp, wt)
+#'   )
+apply_formats <- function(format_string, ..., empty = c(.overall = "")) {
+   
+   format <- f_str(format_string, ..., empty=empty)
+   
    # The purpose of this is simply to properly vectorize over apply_fmts
-   pmap_chr(dat, function(...) apply_fmts(...), fmt=format)
+   pmap_chr(list(...), function(...) apply_fmts(...), fmt=format)
 }
 
 
@@ -31,18 +38,19 @@ apply_formats <- function(dat, format=NULL) {
 #' input data
 #' 
 #' @param ... Ellipse collected by pmap
+#' @param fmt Format string object
 #'
 #' @return Output character vector
-apply_fmts <- function(...) {
-   # This pulls out the ellipse into the function environment as local variables
-   list2env(list(...), env=environment())
+apply_fmts <- function(..., fmt) {
+
+   nums <- list(...)
 
    # Allocate the output character vector
    repl <- vector('list', length(fmt$settings))
    
    # Loop over and grab the formatted values of each argument in the f_str
    for (i in seq_along(fmt$settings)) {
-      repl[[i]] <- Tplyr:::num_fmt(eval(fmt$vars[[i]]), i, fmt=fmt)
+      repl[[i]] <- Tplyr:::num_fmt(nums[[i]], i, fmt=fmt)
    }
    
    # Build up the arguments and apply to sprintf
@@ -51,4 +59,6 @@ apply_fmts <- function(...) {
 }
 
 mtcars %>% 
-   apply_formats(format=f_str("xxx (x.xx)", hp, wt))
+   mutate(
+      formatted_string = apply_formats("xxx (x.xx)", hp, wt)
+   )
