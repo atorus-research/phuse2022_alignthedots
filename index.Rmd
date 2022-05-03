@@ -67,6 +67,7 @@ background-color: black
   ]
   .website.yellow[
     [bit.ly/phuse-align-dots](bit.ly/phuse-align-dots)
+    [bit.ly/align thedotscode](bit.ly/alignthedotscode)
   ]
 ]
 
