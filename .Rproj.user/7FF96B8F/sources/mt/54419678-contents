@@ -4,21 +4,35 @@ author: "Mike Stackhouse and Maya Gans"
 date: "`r Sys.Date()`"
 output:
   xaringan::moon_reader:
-    seal: false
+    seal: no
     lib_dir: libs
-    css: www/css/styles.css
+    css: www/css/style.css
     nature:
-      titleSlideClass: ["bottom", "left"]
-      slideNumberFormat: "%current%"
+      titleSlideClass:
+      - bottom
+      - left
+      slideNumberFormat: '%current%'
       highlightStyle: github
-      highlightLines: true
-      ratio: "16:9"
-      countIncrementalSlides: true
+      highlightLines: yes
+      ratio: '16:9'
+      countIncrementalSlides: yes
+resource_files:
+- www/img/alignment_is_hard1.jpg
+- www/img/alignment_is_hard2.jpg
+- www/img/connect-the-dots.gif
+- www/img/stephenfew.png
+- www/img/tplyr_fstr1.jpg
+- www/img/tplyr_fstr2.png
+- www/img/tplyr_fstr3.png
 ---
 
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(highlight = TRUE)
+library(magrittr)
+library(purrr)
+library(Tplyr)
+library(dplyr)
 ```
 
 ```{r xaringan-themer, include=FALSE}
@@ -33,19 +47,19 @@ mono_light(
 )
 ```
 
-background-color: #ff03d7
+background-color: black
 
 .title[
  .title-prefix[ 
   # Aligning the dots
  ]
-.title-suffix[ 
+.title-suffix.pink[ 
   # Simplifying Table Presentations in R 
  ]
 ]
 
 .byline[
-  .location[
+  .location.pink[
     Phuse US 2022 Atlanta, Georgia
   ]
   .authors[
@@ -55,9 +69,11 @@ background-color: #ff03d7
 
 ---
 
-background-color: #cfff00
+background-color: black
 
+.green[
 # Overview
+]
 
 .two-column[
 
@@ -65,7 +81,7 @@ background-color: #cfff00
 ![connect the dots flower](www/img/connect-the-dots.gif)
 ]
 
-.right-col[
+.right-col.pink[
 - Defining the problem
 - How Tplyr solves it
 - Using f_str() outside of Tplyr
@@ -77,7 +93,7 @@ background-color: #cfff00
 
 ---
 
-background-color: #fffb00
+background-color: black
 
 .two-column[
 .left-col.top-margin-100[
@@ -88,15 +104,17 @@ background-color: #fffb00
 .pink.top-margin-200.big-h2[ 
 ## Table Design 
 ]
+.pink[
 "Align both the decimal point and the final digit to the right."
 ]
 ]
+]
 
-.bottom-legend[DEFINING THE PROBLEM]
+.bottom-legend.yellow[DEFINING THE PROBLEM]
 
 ---
 
-background-image: url('www/img/alignment_is_hard1.jpg')
+background-image: url(www/img/alignment_is_hard1.jpg)
 background-size: contain
 
 .problem-title[
@@ -107,14 +125,14 @@ background-size: contain
 
 ---
 
-background-image: url('www/img/alignment_is_hard2.jpg')
+background-image: url(www/img/alignment_is_hard2.jpg)
 background-size: contain
 
 .problem-title[
 #alignment is harder than the math itself!
 ]
 
-.right-legend[DEFINING THE PROBLEM]
+.right-legend.green[DEFINING THE PROBLEM]
 
 ---
 
@@ -132,11 +150,148 @@ background-color: black
 
 ---
 
-# How Tplyr Solves It
+background-color: black
+
+.top-legend.pink[HOW TPLYR SOLVES IT]
+.big-text.yellow[
+#What is the f_str()
+] 
+.custom-hr[]
+.little-text.pink[Pronounced .yellow["f string"], it is an object to hold metadata around a string format. You can get a lot of metadata out of a small bit of information!]
+ 
 
 ---
 
+background-image: url(www/img/tplyr_fstr1.jpg)
+background-size: contain
+
+.top-legend.pink[HOW TPLYR SOLVES IT]
+
+.big-text-2[
+## What does an f_str() look like
+]
+
+```{r, echo=FALSE}
+# f_str('xxx (x.xx)', hp, wt)
+# The variables being formatted are `hp` and `wt`
+# `hp` is formatted with a width of 3 integers and no decimals
+# `wt` is formatted with a width of 1 integer and 2 decimals
+# What the output string should look like
+# And more! 
+```
+  
+---
+
+background-image: url(www/img/tplyr_fstr2.png)
+background-size: contain
+
+.top-legend.green[HOW TPLYR SOLVES IT]
+
+.big-text-3[
+##Tplyr uses this information to do a lot
+]
+
+.sub-title-desc.pink[
+### DESCRIPTIVE LAYER
+]
+
+```{r, echo=FALSE}
+# In descriptive statistic layers, it tells us:
+# What summaries will be performed
+# Which summaries go on the same row
+```
+
+---
+
+background-image: url(www/img/tplyr_fstr3.png)
+background-size: contain
+
+.top-legend.green[HOW TPLYR SOLVES IT]
+
+.big-text-3[
+##Tplyr uses this information to do a lot
+]
+
+.sub-title-count.pink[
+### COUNT LAYER
+]
+
+```{r, echo=FALSE}
+# In count layers, it tells us:
+# Which numbers will be presented
+# `f_str()` objects collected whether auto-precision should be used
+# Decimal places can be incremented based on data as collected (or now - provided from an external source)
+```
+
+---
+
+background-color: black
+
+.yellow.center[
 # f_str() Outside of Tplyr
+]
+
+.lft[
+```{r, warning=FALSE, message=FALSE, eval=FALSE}
+apply_formats <- function(format_string, ..., empty = c(.overall = "")) {
+   format <- f_str(format_string, ..., empty=empty)
+   pmap_chr(list(...), function(...) apply_fmts(...), fmt=format)
+}
+
+apply_fmts <- function(..., fmt) {
+   nums <- list(...)
+   repl <- vector('list', length(fmt$settings))
+   for (i in seq_along(fmt$settings)) {
+      repl[[i]] <- Tplyr:::num_fmt(nums[[i]], i, fmt=fmt)
+   }
+   args <- append(list(fmt$repl_str), repl)
+   do.call('sprintf', args)
+}
+
+mtcars %>%
+   mutate(
+      formatted_string = apply_formats("xxx (x.xx)", hp, wt)
+   )
+```
+
+```{r, echo=FALSE, results='hide'}
+apply_formats <- function(format_string, ..., empty = c(.overall = "")) {
+   format <- f_str(format_string, ..., empty=empty)
+   pmap_chr(list(...), function(...) apply_fmts(...), fmt=format)
+}
+
+apply_fmts <- function(..., fmt) {
+   nums <- list(...)
+   repl <- vector('list', length(fmt$settings))
+   for (i in seq_along(fmt$settings)) {
+      repl[[i]] <- Tplyr:::num_fmt(nums[[i]], i, fmt=fmt)
+   }
+   args <- append(list(fmt$repl_str), repl)
+   do.call('sprintf', args)
+}
+```
+]
+
+.rht[
+
+```{r, echo=FALSE}
+mtcars %>%
+   mutate(
+      formatted_string = apply_formats("xxx (x.xx)", hp, wt)
+   ) %>% 
+   dplyr::select(hp, wt, formatted_string) %>%
+   head(., 20)
+```
+]
+
+```{r, echo=FALSE}
+# Tplyr leverages the `f_str()` object to do a lot of work, but you can use it too! 
+# With `f_str()` and the Tplyr function `num_fmt()`, you can write you own custom formatter
+# `f_str()` provides the metadata, and `num_fmt()` with properly round and format 
+# The key idea of the formatter is understanding the input data structure to tie everything together
+# <Reference example code in test.R>
+# Once set up, you have a consistent and highly flexible format customize formatting
+```
 
 ---
 
@@ -152,41 +307,67 @@ background-color: black
 
 ---
 
-background-color: var(--yellow)
+background-color: black
 
-.legend-top[EXAMPLES]
+.legend-top.pink[EXAMPLES]
 
-.top-title[
+.top-title.yellow[
 # RTF
 ]
 
-```{r, echo=FALSE}
-data.frame(
+.rtf[
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(magrittr)
+kableExtra::kable(data.frame(
   row_label1 = "Age categories",
   row_label2 = c("65-80", "<65", ">80"),
   Placebo = c("42 (48.8)", "14 (16.3)", "30 (34.9)"),
   `Xanomeline High Dose`= c("55 (65.5)", "11 (13.1)", "18 (21.4)"),
   `Xanomeline Low Dose`= c("47 (56.0)", "8 ( 9.5)", "29 (34.5)")
-) |>
-  kable()
+)) %>%
+  kableExtra::column_spec(1, width = "210px") %>%
+  kableExtra::column_spec(2, width = "160px") %>%
+  kableExtra::column_spec(3, width = "160px") %>%
+  kableExtra::column_spec(4, width = "300px") %>%
+  kableExtra::column_spec(5, width = "150px")
 ```
-
----
-
-background-color: var(--green)
-
-.legend-top[EXAMPLES]
-
-.top-title.pink[
-# HTML
 ]
 
 ---
 
-background-color: var(--pink)
+background-color: black
+
+.legend-top.pink[EXAMPLES]
+
+.top-title.green[
+# HTML
+]
 
 
-.finale[ 
+.html[
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(magrittr)
+kableExtra::kable(data.frame(
+  row_label1 = "Age categories",
+  row_label2 = c("65-80", "<65", ">80"),
+  Placebo = c("42 (48.8)", "14 (16.3)", "30 (34.9)"),
+  `Xanomeline High Dose`= c("55 (65.5)", "11 (13.1)", "18 (21.4)"),
+  `Xanomeline Low Dose`= c("47 (56.0)", "8 ( 9.5)", "29 (34.5)")
+)) %>%
+  kableExtra::column_spec(1, width = "210px") %>%
+  kableExtra::column_spec(2, width = "160px") %>%
+  kableExtra::column_spec(3, width = "160px") %>%
+  kableExtra::column_spec(4, width = "300px") %>%
+  kableExtra::column_spec(5, width = "150px")
+```
+]
+
+---
+
+background-color: black
+
+
+.finale.pink[ 
 # Thank You
 ]
 

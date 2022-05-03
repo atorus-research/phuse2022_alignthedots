@@ -65,6 +65,9 @@ background-color: black
   .authors[
     Mike Stackhouse Maya Gans
   ]
+  .website.yellow[
+    [bit.ly/phuse-align-dots](bit.ly/phuse-align-dots)
+  ]
 ]
 
 ---
@@ -299,7 +302,7 @@ background-color: black
 
 .big-list[
 - .yellow[let the presentation library do the work]
-- .pink[monospace fonts make this possible and accssible]
+- .pink[monospace fonts make this possible and accessible]
 - .green[output agnostic]
 ]
 
@@ -323,13 +326,13 @@ kableExtra::kable(data.frame(
   row_label2 = c("65-80", "<65", ">80"),
   Placebo = c("42 (48.8)", "14 (16.3)", "30 (34.9)"),
   `Xanomeline High Dose`= c("55 (65.5)", "11 (13.1)", "18 (21.4)"),
-  `Xanomeline Low Dose`= c("47 (56.0)", "8 ( 9.5)", "29 (34.5)")
-)) %>%
+  `Xanomeline Low Dose`= c("47 (56.0)", "&nbsp;8 ( 9.5)", "29 (34.5)")
+), escape = FALSE) %>%
   kableExtra::column_spec(1, width = "210px") %>%
   kableExtra::column_spec(2, width = "160px") %>%
   kableExtra::column_spec(3, width = "160px") %>%
   kableExtra::column_spec(4, width = "300px") %>%
-  kableExtra::column_spec(5, width = "150px")
+  kableExtra::column_spec(5, width = "150px") 
 ```
 ]
 
@@ -352,8 +355,8 @@ kableExtra::kable(data.frame(
   row_label2 = c("65-80", "<65", ">80"),
   Placebo = c("42 (48.8)", "14 (16.3)", "30 (34.9)"),
   `Xanomeline High Dose`= c("55 (65.5)", "11 (13.1)", "18 (21.4)"),
-  `Xanomeline Low Dose`= c("47 (56.0)", "8 ( 9.5)", "29 (34.5)")
-)) %>%
+  `Xanomeline Low Dose`= c("47 (56.0)", "&nbsp;8 ( 9.5)", "29 (34.5)")
+), escape = FALSE) %>%
   kableExtra::column_spec(1, width = "210px") %>%
   kableExtra::column_spec(2, width = "160px") %>%
   kableExtra::column_spec(3, width = "160px") %>%
